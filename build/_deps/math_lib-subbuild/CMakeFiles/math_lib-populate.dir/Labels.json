@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/CMakeFiles/math_lib-populate"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/CMakeFiles/math_lib-populate.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/CMakeFiles/math_lib-populate-complete.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-build.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-configure.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-download.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-install.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-patch.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-test.rule"
+		},
+		{
+			"file" : "/home/iwillwin/homeWorkFirst/build/_deps/math_lib-subbuild/math_lib-populate-prefix/src/math_lib-populate-stamp/math_lib-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"math_lib-populate"
+		],
+		"name" : "math_lib-populate"
+	}
+}

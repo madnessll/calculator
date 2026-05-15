@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/iwillwin/homeWorkFirst/math_lib
+CXX_INCLUDES = -I/home/iwillwin/homeWorkFirst/build/_deps/math_lib-src
 
 CXX_FLAGS = 
 

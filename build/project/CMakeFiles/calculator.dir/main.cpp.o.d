@@ -31,4 +31,4 @@ project/CMakeFiles/calculator.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
- /home/iwillwin/homeWorkFirst/project/../math_lib/math_lib.h
+ /home/iwillwin/homeWorkFirst/build/_deps/math_lib-src/math_lib.h

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "../math_lib/math_lib.h"
+#include "math_lib.h"
 
 struct Task {
     double first_num;

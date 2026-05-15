@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 3.15)
 project(calculator)
 
+include(FetchContent)
+
+FetchContent_Declare(
+    math_lib
+    GIT_REPOSITORY https://github.com/madnessll/math_lib.git
+    GIT_TAG main
+)
+
+FetchContent_MakeAvailable(math_lib)
+
 option(USE_CLANG_FORMAT "Enable clang-format" OFF)
 option(USE_CLANG_TIDY "Enable clang-tidy" OFF)
 
