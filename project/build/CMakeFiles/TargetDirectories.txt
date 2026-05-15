@@ -1,0 +1,7 @@
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/calculator.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/edit_cache.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/rebuild_cache.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/list_install_components.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/install.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/install/local.dir
+/home/iwillwin/homeWorkFirst/project/build/CMakeFiles/install/strip.dir

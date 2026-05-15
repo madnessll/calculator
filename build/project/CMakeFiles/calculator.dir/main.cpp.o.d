@@ -1,5 +1,6 @@
 project/CMakeFiles/calculator.dir/main.cpp.o: \
  /home/iwillwin/homeWorkFirst/project/main.cpp /usr/include/stdc-predef.h \
+ /home/iwillwin/homeWorkFirst/build/_deps/math_lib-src/math_lib.h \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -30,5 +31,4 @@ project/CMakeFiles/calculator.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h \
- /home/iwillwin/homeWorkFirst/build/_deps/math_lib-src/math_lib.h
+ /usr/include/linux/close_range.h

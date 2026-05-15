@@ -1,1 +1,31 @@
-Checks: 'clang-diagnostic-*,clang-analyzer-*'
+Checks: '
+-*,
+bugprone-*,
+clang-analyzer-*,
+concurrency-*,
+cppcoreguidelines-*,
+google-*,
+misc-*,
+-misc-include-cleaner,
+modernize-*,
+-modernize-use-trailing-return-type,
+performance-*,
+portability-*,
+readability-*,
+'
+
+WarningsAsErrors: '*'
+CheckOptions:
+# https://clang.llvm.org/extra/clang-tidy/checks/readability/identifier-naming.html
+  - { key: readability-identifier-naming.ClassCase,     value: CamelCase  }
+  - { key: readability-identifier-naming.ClassMemberCase, value: camelBack }
+  - { key: readability-identifier-naming.ClassMemberSuffix, value: _ }
+  - { key: readability-identifier-naming.StaticConstantCase, value: camelBack }
+  - { key: readability-identifier-naming.StaticConstantSuffix, value: _ }
+
+  - { key: readability-identifier-naming.NamespaceCase, value: lower_case }
+  - { key: readability-identifier-naming.StructCase,    value: CamelCase }
+
+  - { key: readability-identifier-naming.VariableCase,  value: camelBack }
+  - { key: readability-identifier-naming.FunctionCase,  value: camelBack }
+  - { key: readability-identifier-naming.ParameterCase, value: camelBack }

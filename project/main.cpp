@@ -1,9 +1,10 @@
+#include "math_lib.h"
+
 #include <stdio.h>
 #include <unistd.h>
 
-#include "math_lib.h"
-
-struct Task {
+struct Task
+{
     double first_num;
     double second_num;
     char operation;
@@ -12,25 +13,31 @@ struct Task {
 };
 
 // DRY
-double charToInt(const char* str) {
+double charToInt(const char* str)
+{
     double num = 0;
     int sign = 1;
     int i = 0;
-    if (str[i] == '-') {
+    if (str[i] == '-')
+    {
         sign = -1;
         i++;
     }
-    for (i; str[i] != '\0'; ++i) {
+    for (i; str[i] != '\0'; ++i)
+    {
         num = num * 10 + (str[i] - '0');
     }
     return num * sign;
 }
 
-void makeTask(int argc, char* argv[], Task& t) {
+void makeTask(int argc, char* argv[], Task& t)
+{
     int opt;
 
-    while ((opt = getopt(argc, argv, "a:b:o:")) != -1) {
-        switch (opt) {
+    while ((opt = getopt(argc, argv, "a:b:o:")) != -1)
+    {
+        switch (opt)
+        {
             case 'a':
                 t.first_num = charToInt(optarg);
                 break;
@@ -44,8 +51,10 @@ void makeTask(int argc, char* argv[], Task& t) {
     }
 }
 
-void makeCalculate(Task& t) {
-    switch (t.operation) {
+void makeCalculate(Task& t)
+{
+    switch (t.operation)
+    {
         case '+':
             t.status =
                 math_lib::calculateSum(t.first_num, t.second_num, t.result);
@@ -72,27 +81,36 @@ void makeCalculate(Task& t) {
     }
 }
 
-void printResult(Task& t) {
-    if (t.status) {
+void printResult(Task& t)
+{
+    if (t.status)
+    {
         double intPart = (long long)t.result;
-        if (t.result == intPart) {
+        if (t.result == intPart)
+        {
             printf("%.0f\n", t.result);
-        } else {
+        }
+        else
+        {
             printf("%.2f\n", t.result);
         }
-    } else {
+    }
+    else
+    {
         printf("type overflow error occurred\n");
     }
 }
 
-void applicationRun(int argc, char* argv[]) {
+void applicationRun(int argc, char* argv[])
+{
     Task t;
     makeTask(argc, argv, t);
     makeCalculate(t);
     printResult(t);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     applicationRun(argc, argv);
     return 0;
 }
