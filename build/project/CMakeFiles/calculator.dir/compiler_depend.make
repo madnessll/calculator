@@ -5,6 +5,7 @@ project/CMakeFiles/calculator.dir/main.cpp.o: /home/iwillwin/homeWorkFirst/proje
   _deps/math_lib-src/math_lib.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/getopt.h \
   /usr/include/linux/close_range.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
@@ -14,6 +15,7 @@ project/CMakeFiles/calculator.dir/main.cpp.o: /home/iwillwin/homeWorkFirst/proje
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_ext.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
@@ -45,11 +47,9 @@ project/CMakeFiles/calculator.dir/main.cpp.o: /home/iwillwin/homeWorkFirst/proje
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
-
-/usr/include/linux/close_range.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -71,6 +71,18 @@ project/CMakeFiles/calculator.dir/main.cpp.o: /home/iwillwin/homeWorkFirst/proje
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
+
+/usr/include/linux/close_range.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/getopt.h:
+
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 _deps/math_lib-src/math_lib.h:
@@ -81,13 +93,7 @@ _deps/math_lib-src/math_lib.h:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+/usr/include/x86_64-linux-gnu/bits/getopt_ext.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 

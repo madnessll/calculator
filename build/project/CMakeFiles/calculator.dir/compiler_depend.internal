@@ -6,6 +6,7 @@ project/CMakeFiles/calculator.dir/main.cpp.o
  /home/iwillwin/homeWorkFirst/build/_deps/math_lib-src/math_lib.h
  /usr/include/features-time64.h
  /usr/include/features.h
+ /usr/include/getopt.h
  /usr/include/linux/close_range.h
  /usr/include/stdc-predef.h
  /usr/include/stdio.h
@@ -15,6 +16,7 @@ project/CMakeFiles/calculator.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h
+ /usr/include/x86_64-linux-gnu/bits/getopt_ext.h
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
