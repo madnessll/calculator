@@ -5,13 +5,13 @@
 
 struct Task
 {
-     int first_num;
+    int first_num;
     int second_num;
     char operation;
-    double result;
+    int result;
     bool status = false;
     bool show_help = false;
-};    
+};
 
 // DRY
 int charToInt(const char* str)
@@ -73,8 +73,8 @@ void makeTask(int argc, char* argv[], Task& t)
             case 'o':
                 t.operation = optarg[0];
                 break;
-	    case 'h':
-		t.show_help = true;
+            case 'h':
+                t.show_help = true;
                 break;
         }
     }
@@ -114,15 +114,7 @@ void printResult(Task& t)
 {
     if (t.status)
     {
-	double intPart = (double)(long long)t.result;
-        if (t.result == intPart)
-        {
-            printf("%.0f\n", t.result);
-        }
-        else
-        {
-            printf("%.2f\n", t.result);
-        }
+        printf("%d\n", t.result);
     }
     else
     {
