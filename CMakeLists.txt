@@ -9,7 +9,19 @@ FetchContent_Declare(
     GIT_TAG main
 )
 
-FetchContent_MakeAvailable(math_lib)
+FetchContent_Declare(
+    nlohmann_json
+    URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+
+FetchContent_MakeAvailable(math_lib nlohmann_json)
+
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.13.0
+)
+FetchContent_MakeAvailable(spdlog)
 
 option(USE_CLANG_FORMAT "Enable clang-format" OFF)
 option(USE_CLANG_TIDY "Enable clang-tidy" OFF)
@@ -28,4 +40,5 @@ if(USE_CLANG_TIDY)
     set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
 endif()
 
+add_subdirectory(tests)
 add_subdirectory(project)
