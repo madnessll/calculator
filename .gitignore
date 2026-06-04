@@ -1,0 +1,26 @@
+# Build
+build/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+_deps/
+
+# Executables
+calculator
+*.exe
+
+# VS Code
+.vscode/
+
+# CLion
+.idea/
+
+# Logs
+*.log
+
+project/json.hpp
+project/build/*
