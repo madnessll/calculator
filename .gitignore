@@ -21,3 +21,6 @@ calculator
 
 # Logs
 *.log
+
+project/json.hpp
+project/build/*
