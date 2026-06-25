@@ -16,3 +16,12 @@ target_link_libraries(tests PRIVATE GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(tests)
+
+find_program(VALGRIND valgrind)
+if(VALGRIND)
+    add_custom_target(valgrind_tests
+        COMMAND ${VALGRIND} --leak-check=full --error-exitcode=1
+        $<TARGET_FILE:tests>
+        DEPENDS tests
+    )
+endif()
