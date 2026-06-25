@@ -14,4 +14,6 @@ target_link_libraries(calculator PRIVATE
     PostgreSQL::PostgreSQL
 )
 
+target_compile_features(calculator PRIVATE cxx_std_20)
+
 install(TARGETS calculator DESTINATION bin)
