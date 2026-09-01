@@ -17,3 +17,8 @@ target_link_libraries(calculator PRIVATE
 target_compile_features(calculator PRIVATE cxx_std_20)
 
 install(TARGETS calculator DESTINATION bin)
+
+if(USE_CLANG_TIDY)
+    find_program(CLANG_TIDY clang-tidy-21)
+    set_target_properties(calculator PROPERTIES CXX_CLANG_TIDY ${CLANG_TIDY})
+endif()

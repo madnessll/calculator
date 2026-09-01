@@ -35,10 +35,9 @@ if(USE_CLANG_FORMAT)
     )
 endif()
 
-if(USE_CLANG_TIDY)
-    find_program(CLANG_TIDY clang-tidy-21)
-    set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
-endif()
-
 add_subdirectory(tests)
 add_subdirectory(project)
+
+install(FILES config/calculator.service
+    DESTINATION /etc/systemd/system
+)
