@@ -12,6 +12,9 @@
 #include <span>
 #include <string>
 #include <unordered_map>
+#include <atomic>
+#include <csignal>
+#include <thread>
 
 namespace calculator
 {
@@ -194,44 +197,35 @@ class Application
     Application(Application&&) = delete;
     Application& operator=(Application&&) = delete;
 
-    void run(int argc, char** argv)
+    void run()
     {
-        getTask(argc, argv);
-        if (task_.show_help)
+        // блокируем сигналы в главном потоке
+        sigset_t signals;
+        sigemptyset(&signals);
+        sigaddset(&signals, SIGTERM);
+        sigaddset(&signals, SIGINT);
+        pthread_sigmask(SIG_BLOCK, &signals, nullptr);
+
+        // запускаем сигнальный поток
+        std::thread signalThread([this, &signals]()
         {
-            printHelp();
-            return;
+            int sig = 0;
+            sigwait(&signals, &sig);
+            Logger::getInstance().info("Signal received, stopping...");
+            running_ = false;
+        });
+
+        // основной цикл
+        Logger::getInstance().info("Service started");
+        constexpr int sleepMs = 100;
+        while (running_)
+        {
+            // здесь будет приём данных по сети (Задача 3)
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
         }
 
-        std::optional<Task> dbRecord = dataBase_.getRecord(task_);
-        if (!dbRecord)
-        {
-            Logger::getInstance().info("Cache miss, calculating...");
-            try
-            {
-                makeCalculate();
-                task_.status = 0;
-            }
-            catch (const std::overflow_error& e)
-            {
-                Logger::getInstance().error(e.what());
-                task_.result = 0;
-                task_.status = 1;
-            }
-            catch (const std::runtime_error& e)
-            {
-                Logger::getInstance().error(e.what());
-                task_.result = 0;
-                task_.status = 2;
-            }
-            dataBase_.writeRecord(task_);
-        }
-        else
-        {
-            Logger::getInstance().info("Cache hit!");
-            task_ = *dbRecord;
-        }
-        printResult();
+        signalThread.join();
+        Logger::getInstance().info("Service stopped");
     }
 
   private:
@@ -323,24 +317,19 @@ class Application
                       << '\n';
         }
     }
-
+    std::atomic<bool> running_{true};
     Task task_;
     DataBase dataBase_;
 };
 
 } // namespace calculator
 
-int main(int argc, char* argv[])
+int main()
 {
     try
     {
         calculator::Application application;
-        application.run(argc, argv);
-    }
-    catch (const nlohmann::json::exception& e)
-    {
-        Logger::getInstance().error(e.what());
-        std::cout << "Error: JSON parse error: " << e.what() << '\n';
+        application.run();
     }
     catch (const std::exception& e)
     {
