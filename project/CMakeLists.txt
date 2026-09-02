@@ -24,3 +24,10 @@ if(USE_CLANG_TIDY)
     find_program(CLANG_TIDY clang-tidy-21)
     set_target_properties(calculator PROPERTIES CXX_CLANG_TIDY ${CLANG_TIDY})
 endif()
+
+option(USE_TSAN "Enable ThreadSanitizer" OFF)
+
+if(USE_TSAN)
+    target_compile_options(calculator PRIVATE -fsanitize=thread)
+    target_link_options(calculator PRIVATE -fsanitize=thread)
+endif()
