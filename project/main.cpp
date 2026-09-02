@@ -15,6 +15,9 @@
 #include <atomic>
 #include <csignal>
 #include <thread>
+#include <boost/asio.hpp>
+
+using boost::asio::ip::tcp;
 
 namespace calculator
 {
@@ -181,6 +184,7 @@ class Application
 {
   public:
     Application()
+        : acceptor_(ioContext_, tcp::endpoint(tcp::v4(), kPort_))
     {
         dataBase_.connect();
         dataBase_.warmUpCach();
@@ -213,15 +217,27 @@ class Application
             sigwait(&signals, &sig);
             Logger::getInstance().info("Signal received, stopping...");
             running_ = false;
+            ioContext_.stop();
         });
 
         // основной цикл
         Logger::getInstance().info("Service started");
-        constexpr int sleepMs = 100;
         while (running_)
         {
-            // здесь будет приём данных по сети (Задача 3)
-            std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
+            try
+            {
+                tcp::socket socket(ioContext_);
+                acceptor_.accept(socket);
+                handleClient(socket);
+            }
+            catch (const boost::system::system_error& err)
+            {
+                if (!running_)
+                {
+                    break;
+                }
+                Logger::getInstance().error(err.what());
+            }
         }
 
         signalThread.join();
@@ -229,49 +245,70 @@ class Application
     }
 
   private:
-    static void printHelp()
+    void handleClient(tcp::socket& socket)
     {
-        std::cout << "Usage:\n";
-        std::cout << "  calculator '{\"a\":5,\"b\":3,\"op\":\"+\"}'\n\n";
-
-        std::cout << "JSON fields:\n";
-        std::cout << "  a   First integer number\n";
-        std::cout << "  b   Second integer number\n";
-        std::cout << "  op  Operation\n\n";
-
-        std::cout << "Operations:\n";
-        std::cout << "  +   Addition\n";
-        std::cout << "  -   Subtraction\n";
-        std::cout << "  *   Multiplication\n";
-        std::cout << "  /   Division\n";
-        std::cout << "  ^   Power\n";
-        std::cout << "  !   Factorial\n\n";
-
-        std::cout << "Examples:\n";
-        std::cout << "  calculator '{\"a\":5,\"b\":3,\"op\":\"+\"}'\n";
-        std::cout << "  calculator '{\"a\":10,\"b\":2,\"op\":\"/\"}'\n";
-        std::cout << "  calculator '{\"a\":5,\"op\":\"!\"}'\n";
-    }
-    void getTask(int argc, char** argv)
-    {
-        if (argc < 2)
+        boost::asio::streambuf buffer;
+        boost::system::error_code errorCode;
+        boost::asio::read_until(socket, buffer, '\n', errorCode);
+        if (errorCode)
         {
-            throw std::runtime_error(
-                "No input provided. Use --help for usage.");
-        }
-
-        const std::span<char*> args(argv, static_cast<std::size_t>(argc));
-        const std::string arg(args[1]);
-
-        if (arg == "--help" || arg == "-h")
-        {
-            task_.show_help = true;
             return;
         }
-        nlohmann::json json = nlohmann::json::parse(args[1]);
-        task_.first_num = json.at("a").get<int>();
-        task_.second_num = json.value("b", 0);
-        task_.operation = json.at("op").get<std::string>()[0];
+
+        std::istream stream(&buffer);
+        std::string line;
+        std::getline(stream, line);
+
+        try
+        {
+            nlohmann::json json = nlohmann::json::parse(line);
+            task_.first_num = json.at("a").get<int>();
+            task_.second_num = json.value("b", 0);
+            const std::string opStr = json.at("op").get<std::string>();
+            task_.operation = opStr.at(0);
+
+            std::optional<Task> dbRecord = dataBase_.getRecord(task_);
+            if (!dbRecord)
+            {
+                Logger::getInstance().info("Cache miss, calculating...");
+                try
+                {
+                    makeCalculate();
+                    task_.status = 0;
+                }
+                catch (const std::overflow_error& err)
+                {
+                    Logger::getInstance().error(err.what());
+                    task_.result = 0;
+                    task_.status = 1;
+                }
+                catch (const std::runtime_error& err)
+                {
+                    Logger::getInstance().error(err.what());
+                    task_.result = 0;
+                    task_.status = 2;
+                }
+                dataBase_.writeRecord(task_);
+            }
+            else
+            {
+                Logger::getInstance().info("Cache hit!");
+                task_ = *dbRecord;
+            }
+
+            nlohmann::json response;
+            response["result"] = task_.result;
+            response["status"] = task_.status;
+            const std::string responseStr = response.dump() + "\n";
+            boost::asio::write(socket, boost::asio::buffer(responseStr), errorCode);
+        }
+        catch (const std::exception& err)
+        {
+            Logger::getInstance().error(err.what());
+            const std::string errResponse = 
+                std::string(R"({"error":")") + err.what() + "\"}\n";
+            boost::asio::write(socket, boost::asio::buffer(errResponse), errorCode);
+        }
     }
     void makeCalculate()
     {
@@ -305,21 +342,12 @@ class Application
                 throw std::runtime_error("Unknown operation");
         }
     }
-    void printResult() const
-    {
-        if (task_.status == 0)
-        {
-            std::cout << task_.result << '\n';
-        }
-        else
-        {
-            std::cout << "Error: operation failed with status " << task_.status
-                      << '\n';
-        }
-    }
+    boost::asio::io_context ioContext_;
+    tcp::acceptor acceptor_;
     std::atomic<bool> running_{true};
     Task task_;
     DataBase dataBase_;
+    static constexpr int kPort_ = 12345;
 };
 
 } // namespace calculator

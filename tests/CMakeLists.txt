@@ -25,3 +25,13 @@ if(VALGRIND)
         DEPENDS tests
     )
 endif()
+
+find_package(Boost REQUIRED COMPONENTS system)
+
+add_executable(client_tests test_client.cpp)
+
+target_link_libraries(client_tests PRIVATE 
+    GTest::gtest_main
+    nlohmann_json::nlohmann_json
+    Boost::system
+)

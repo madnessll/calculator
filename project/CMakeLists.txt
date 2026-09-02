@@ -1,4 +1,5 @@
 find_package(PostgreSQL REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
 
 add_executable(calculator main.cpp logger.cpp)
 
@@ -12,6 +13,7 @@ target_link_libraries(calculator PRIVATE
     nlohmann_json::nlohmann_json
     spdlog::spdlog
     PostgreSQL::PostgreSQL
+    Boost::system
 )
 
 target_compile_features(calculator PRIVATE cxx_std_20)
