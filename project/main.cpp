@@ -3,19 +3,19 @@
 
 #include <libpq-fe.h>
 
+#include <boost/asio.hpp>
 #include <nlohmann/json.hpp>
 
+#include <atomic>
+#include <csignal>
 #include <cstdio>
 #include <iostream>
 #include <memory>
 #include <optional>
 #include <span>
 #include <string>
-#include <unordered_map>
-#include <atomic>
-#include <csignal>
 #include <thread>
-#include <boost/asio.hpp>
+#include <unordered_map>
 
 using boost::asio::ip::tcp;
 
@@ -183,8 +183,7 @@ class DataBase
 class Application
 {
   public:
-    Application()
-        : acceptor_(ioContext_, tcp::endpoint(tcp::v4(), kPort_))
+    Application() : acceptor_(ioContext_, tcp::endpoint(tcp::v4(), kPort_))
     {
         dataBase_.connect();
         dataBase_.warmUpCach();
@@ -211,8 +210,7 @@ class Application
         pthread_sigmask(SIG_BLOCK, &signals, nullptr);
 
         // запускаем сигнальный поток
-        std::thread signalThread([this, &signals]()
-        {
+        std::thread signalThread([this, &signals]() {
             int sig = 0;
             sigwait(&signals, &sig);
             Logger::getInstance().info("Signal received, stopping...");
@@ -300,14 +298,16 @@ class Application
             response["result"] = task_.result;
             response["status"] = task_.status;
             const std::string responseStr = response.dump() + "\n";
-            boost::asio::write(socket, boost::asio::buffer(responseStr), errorCode);
+            boost::asio::write(socket, boost::asio::buffer(responseStr),
+                               errorCode);
         }
         catch (const std::exception& err)
         {
             Logger::getInstance().error(err.what());
-            const std::string errResponse = 
+            const std::string errResponse =
                 std::string(R"({"error":")") + err.what() + "\"}\n";
-            boost::asio::write(socket, boost::asio::buffer(errResponse), errorCode);
+            boost::asio::write(socket, boost::asio::buffer(errResponse),
+                               errorCode);
         }
     }
     void makeCalculate()
