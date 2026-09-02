@@ -41,3 +41,11 @@ add_subdirectory(project)
 install(FILES config/calculator.service
     DESTINATION /etc/systemd/system
 )
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME "calculator")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_DESCRIPTION "Calculator service")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "iwillwin")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpq5, libboost-system1.74.0")
+include(CPack)
